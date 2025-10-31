@@ -4,7 +4,7 @@ from app.db.session import async_engine, Base
 from app.utils.logging_config import RequestLoggerMiddleware, logger
 from app.routes import company_routes, category_routes, product_routes
 
-app = FastAPI(title="Product Management API (Async SQLAlchemy)")
+app = FastAPI(title="Product Management API ")
 
 app.add_middleware(RequestLoggerMiddleware)
 
@@ -21,7 +21,7 @@ async def on_startup():
 
     async with async_engine.begin() as conn:
         await conn.run_sync(Base.metadata.create_all)
-    logger.info("Database tables ensured and app started")
+    logger.info("Database tables are created successfully")
 
 
 @app.on_event("shutdown")
