@@ -50,7 +50,7 @@ function TaskList({ tasks, updateTask, deleteTask }) {  // receiving props from 
                 className="delete-btn"
                 onClick={() => deleteTask(task.id)} // Delete button fetches deleteTask function from props defined in ToDoList.jsx named as deleteTask
               >
-                Delete
+                Delete 
               </button>
             </div>
           </div>

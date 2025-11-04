@@ -1,6 +1,6 @@
 import React from "react";
 
-function DeleteTask({ id, deleteTask }) {
+function DeleteTask({ id, deleteTask }) { // receiving props from ToDoList.jsx named as id
   return (
     <button
       className="delete-btn"
@@ -10,5 +10,5 @@ function DeleteTask({ id, deleteTask }) {
     </button>
   );
 }
-
+   
 export default DeleteTask;
