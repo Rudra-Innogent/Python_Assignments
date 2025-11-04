@@ -3,67 +3,66 @@ import AddTask from "./AddTask";
 import TaskList from "./TaskList";
 
 function ToDoList() {
-  // Initialize from localStorage safely
-  const [tasks, setTasks] = useState(() => {
-    const savedTasks = localStorage.getItem("tasks");
-    return savedTasks ? JSON.parse(savedTasks) : [];
-  });
+  const [tasks, setTasks] = useState([]);
 
-  // Whenever tasks update → save to localStorage
+  // Load from localStorage once on mount
   useEffect(() => {
-    localStorage.setItem("tasks", JSON.stringify(tasks));
+    const storedTasks = localStorage.getItem("tasks");
+    if (storedTasks) {
+      setTasks(JSON.parse(storedTasks));
+    }
+  }, []);
+
+  // Save to localStorage whenever tasks change (only if tasks not empty)
+  useEffect(() => {
+    if (tasks.length > 0) {
+      localStorage.setItem("tasks", JSON.stringify(tasks));
+    }
   }, [tasks]);
+
+  // Get current date/time
+  const getCurrentDateTime = () => {
+    return new Date().toLocaleString("en-GB", {
+      day: "2-digit",
+      month: "short",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: false,
+    });
+  };
 
   // Add new task
   const addTask = (description) => {
+    if (!description.trim()) return;
     const newTask = {
       id: Date.now(),
-      date: new Date().toLocaleString("en-IN", {
-        day: "2-digit",
-        month: "short",
-        year: "numeric",
-        hour: "2-digit",
-        minute: "2-digit",
-        hour12: false, // 24-hour format
-      }),
       description,
+      date: getCurrentDateTime(),
     };
     setTasks((prev) => [...prev, newTask]);
   };
 
-  // Delete task
-  const deleteTask = (id) => {
-    setTasks((prev) => prev.filter((task) => task.id !== id));
+  // Update existing task
+  const updateTask = (id, newDesc) => {
+    const updated = tasks.map((task) =>
+      task.id === id
+        ? { ...task, description: newDesc, date: getCurrentDateTime() }
+        : task
+    );
+    setTasks(updated);
   };
 
-  // Update task
- // Update task
-const updateTask = (id, newDesc) => {
-  setTasks((prev) =>
-    prev.map((task) =>
-      task.id === id
-        ? {
-            ...task,
-            description: newDesc,
-            date: new Date().toLocaleString("en-IN", {
-              day: "2-digit",
-              month: "short",
-              year: "numeric",
-              hour: "2-digit",
-              minute: "2-digit",
-              hour12: false, // 24-hour format
-            }),
-          }
-        : task
-    )
-  );
-};
-
+  // Delete task
+  const deleteTask = (id) => {
+    setTasks(tasks.filter((task) => task.id !== id));
+  };
 
   return (
     <div className="todo-container">
+      <h1 className="app-title">My To-Do List</h1>
       <AddTask addTask={addTask} />
-      <TaskList tasks={tasks} deleteTask={deleteTask} updateTask={updateTask} />
+      <TaskList tasks={tasks} updateTask={updateTask} deleteTask={deleteTask} />
     </div>
   );
 }

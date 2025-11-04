@@ -1,4 +1,4 @@
-/* ====== Global Styles ====== */
+
 body {
   margin: 0;
   padding: 0;
@@ -8,7 +8,7 @@ body {
   background-color: #f3f6fb;
 }
 
-/* ====== Main Container ====== */
+
 .app-container {
   max-width: 650px;
   margin: 60px auto;
@@ -19,17 +19,26 @@ body {
   backdrop-filter: blur(5px);
 }
 
-/* ====== Title ====== */
 .app-title {
+  font-size: 2.4rem;
+  font-weight: 800;
   text-align: center;
-  color: #2b00ff;
-  font-size: 2.2rem;
-  font-weight: 600;
+  background: linear-gradient(90deg, #007bff, #00d4ff);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: 1.5px;
   margin-bottom: 25px;
-  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+  transition: all 0.4s ease;
+  text-transform: uppercase;
 }
 
-/* ====== Task Form ====== */
+.app-title:hover {
+  transform: scale(1.05);
+  text-shadow: 0 0 12px rgba(0, 123, 255, 0.6),
+               0 0 25px rgba(0, 212, 255, 0.5);
+}
+
+
 .task-form {
   display: flex;
   gap: 12px;
@@ -45,7 +54,7 @@ body {
 }
 
 .task-form button {
-  background-color: #28a745; /* Add button green */
+  background-color: #28a745; 
   color: white;
   border: none;
   border-radius: 8px;
@@ -57,10 +66,11 @@ body {
 }
 
 .task-form button:hover {
-  background-color: #1e7e34;
+  color: rgb(43, 101, 34);
+  background-color: #f5f7f6;
 }
 
-/* ====== Task List ====== */
+
 .task-list {
   list-style: none;
   padding: 0;
@@ -77,7 +87,7 @@ body {
   position: relative;
 }
 
-/* ====== Task Header (Date + Buttons) ====== */
+
 .task-header {
   display: flex;
   justify-content: space-between;
@@ -90,7 +100,6 @@ body {
   color: #666;
 }
 
-/* ====== Buttons ====== */
 .task-buttons {
   display: flex;
   gap: 10px;
@@ -107,7 +116,7 @@ body {
 }
 
 .task-buttons button:first-child {
-  background-color: #007bff; /* Edit button */
+  background-color: #007bff; 
 }
 
 .task-buttons button:first-child:hover {
@@ -115,14 +124,13 @@ body {
 }
 
 .task-buttons button:last-child {
-  background-color: #dc3545; /* Delete button */
+  background-color: #dc3545; 
 }
 
 .task-buttons button:last-child:hover {
   background-color: #a71d2a;
 }
 
-/* ====== Task Description ====== */
 .task-desc {
   font-size: 1rem;
   color: #333;
@@ -130,7 +138,7 @@ body {
   margin-top: 4px;
 }
 
-/* ====== Edit Input ====== */
+
 .edit-input {
   width: 100%;
   padding: 8px;
@@ -139,10 +147,55 @@ body {
   font-size: 1rem;
 }
 
-/* ====== Empty State ====== */
+
 .no-task {
   text-align: center;
   color: #999;
   margin-top: 20px;
   font-size: 1.1rem;
+}
+.task-item {
+  background-color: #f8f9fa;
+  border-radius: 10px;
+  padding: 12px 16px;
+  margin: 10px 0;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.task-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 6px;
+}
+
+.task-date {
+  font-size: 0.85rem;
+  color: #666;
+}
+
+.task-actions button {
+  margin-left: 8px;
+  padding: 4px 10px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.8rem;
+}
+
+.edit-btn { background-color: #fde90d; color: rgb(14, 13, 13); }
+.save-btn { background-color: #198754; color: rgb(251, 248, 248); }
+.delete-btn { background-color: #f50921; color: rgb(12, 12, 12); }
+
+.edit-btn:hover {
+  background-color: rgb(14, 13, 13);
+  color: #fde90d;
+}
+.save-btn:hover {
+  background-color: rgb(251, 248, 248);
+  color: #198754;
+}
+.delete-btn:hover {
+  background-color: rgb(12, 12, 12);
+  color: #f50921;
 }

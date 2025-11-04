@@ -6,7 +6,7 @@ function AddTask({ addTask }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!description.trim()) return alert("Please enter a task!");
-    addTask(description);
+    addTask(description); // calling parent function via props
     setDescription("");
   };
 

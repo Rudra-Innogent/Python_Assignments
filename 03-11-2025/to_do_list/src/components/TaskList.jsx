@@ -1,50 +1,58 @@
 import React, { useState } from "react";
 
-function TaskList({ tasks, deleteTask, updateTask }) {
-  const [editId, setEditId] = useState(null);
-  const [newText, setNewText] = useState("");
+function TaskList({ tasks, updateTask, deleteTask }) {  // receiving props from ToDoList.jsx named as tasks, updateTask and deleteTask
+  const [editId, setEditId] = useState(null);         // state to track which task is being edited and its initial value is null
+  const [newDesc, setNewDesc] = useState("");       // state to track new description of the task being edited and its initial value is empty string
 
-  const handleEdit = (id, currentText) => {
+  const handleEdit = (id, desc) => { // When Edit button is clicked
     setEditId(id);
-    setNewText(currentText);
+    setNewDesc(desc);
   };
 
-  const handleUpdate = (id) => {
-    updateTask(id, newText);
-    setEditId(null);
-    setNewText("");
+  const handleSave = (id) => {    // When Save button is clicked
+    updateTask(id, newDesc);    // calling parent function via props defined in ToDoList.jsx named as updateTask and passing id as state and newDesc as updated description
+    setEditId(null);        // exit edit mode after saving
   };
-
-  if (tasks.length === 0)
-    return <p className="no-task">No tasks yet. Add one!</p>;
 
   return (
     <ul className="task-list">
       {tasks.map((task) => (
         <li key={task.id} className="task-item">
-          <div>
-           
-            <p><strong>Date:</strong> {task.date}</p>
+          {editId === task.id ? (  // If in edit mode, show input field, turnary operator
+            <input
+              type="text"
+              value={newDesc}
+              onChange={(e) => setNewDesc(e.target.value)}
+              className="edit-input"
+            />
+          ) :                   //else show task description
+          (
+            <span className="task-desc">{task.description}</span>
+          )}        {/* turnary operator ends */}
 
-            {editId === task.id ? (
-              <input
-                value={newText}
-                onChange={(e) => setNewText(e.target.value)}
-              />
-            ) : (
-              <p><strong>Task:</strong> {task.description}</p>
-            )}
-          </div>
+          <div className="task-footer">
+            <span className="task-date">{task.date}</span>
 
-          <div className="task-buttons">
-            {editId === task.id ? (
-              <button onClick={() => handleUpdate(task.id)}>Save</button>
-            ) : (
-              <button onClick={() => handleEdit(task.id, task.description)}>
-                Edit
+            <div className="task-actions">
+              {editId === task.id ? (   // If in edit mode, show Save button
+                <button className="save-btn" onClick={() => handleSave(task.id)}> { /* Save button fetches handleSave function defined above */}
+                  Save
+                </button>
+              ) : (  //else show Edit button
+                <button
+                  className="edit-btn"
+                  onClick={() => handleEdit(task.id, task.description)}
+                >
+                  Edit
+                </button>
+              )}        {/* turnary operator ends */}
+              <button
+                className="delete-btn"
+                onClick={() => deleteTask(task.id)} // Delete button fetches deleteTask function from props defined in ToDoList.jsx named as deleteTask
+              >
+                Delete
               </button>
-            )}
-            <button onClick={() => deleteTask(task.id)}>Delete</button>
+            </div>
           </div>
         </li>
       ))}
